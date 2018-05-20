@@ -1,8 +1,12 @@
 public class leetcode375GuessNumberII{
+
+	
+
 	public int getmoneyAmount(int n){
 		int[][] table = new int[n+1][n+1];
 		return DP(table, 1, n);
 	}
+
 	public int DP(int[][] t, int s, int e){
 		if(s >= e) return 0;
 		if(t[s][e] != 0) return t[s][e];
@@ -14,8 +18,9 @@ public class leetcode375GuessNumberII{
 		t[s][e] = res;
 		return res;
 	}
-	public static void main(String[] Args){
-		int n = 10;
-		System.out.println(getmoneyAmount(n));
+	
+	public static void main(String[] args){
+		System.out.println("hello world");
 	}
+	
 }

@@ -1,7 +1,5 @@
 public class leetcode375GuessNumberII{
 
-	
-
 	public int getmoneyAmount(int n){
 		int[][] table = new int[n+1][n+1];
 		return DP(table, 1, n);
@@ -18,7 +16,7 @@ public class leetcode375GuessNumberII{
 		t[s][e] = res;
 		return res;
 	}
-	
+
 	public static void main(String[] args){
 		System.out.println("hello world");
 	}

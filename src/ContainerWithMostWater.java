@@ -1,7 +1,8 @@
 /**
 *since the maxarea is limited by the shorter line, 
 *moving the shorter line's pointer could turn out to be beneficial;
-*
+*time: O(n) single pass
+*O(1)
 */
 
 

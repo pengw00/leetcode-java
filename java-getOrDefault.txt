@@ -1,0 +1,130 @@
+java getOrDefault()
+JDK8 Map接口提供 新的便利方法 类似于python defaultdict； 即以默认值的方式实现，所有现有的map接口实现可以拥有这些在默认值方法中定义的默认行为，不许要新增一行代码。
+以下是一些JDK8 引进的Map方法：
+getOrDefault（object， V）， putIfAbsent（K，V）， remove（Object，Object）， replace（K，V）and replece(K,V,V).
+
+1. getOrDefault(key,V)允许调用者在代码语句中规定获得在map中符合提供的键的值，否则在没有找到提供的键的匹配项的时候返回一个“默认值”。
+
+previous:
+String capitalGeorgia = statesAndCapitals.get("Georgia");
+if (capitalGeorgia == null)
+{
+   capitalGeorgia = "Unknown";
+}
+
+After JDK8:
+final String capitalWisconsin = statesAndCapitals.getOrDefault("Wisconsin", "Unknown");
+
+Groovy GDK中为Groovy包含了一个类似的方法，Map.get(Object,Object)，但是这个方法的行为有一点不同，因为它不仅仅在“键”没找到的时候返回提供的默认值，而且还会将键和默认值增加到调用的map中.
+
+Map.putIfAbsent(K,V)
+V v = map.get(key);
+ if (v == null)
+     v = map.put(key, value);
+
+ return v;
+
+ /*
+ * 示范Map.putIfAbsent方法并和JDK8之前的实现方法做对比。JDK8
+ * 中新增的Map.putIfAbsent方法相比于传统的实现方法，所用的代码行数更少
+ * 并且允许用一个final类型的变量来接收返回值。 
+ */
+
+// JDK8之前的实现方式
+String capitalMississippi = statesAndCapitals.get("Mississippi");
+if (capitalMississippi == null)
+{
+   capitalMississippi = statesAndCapitals.put("Mississippi", "Jackson");
+}
+
+// JDK8的实现方式
+final String capitalNewYork = statesAndCapitals.putIfAbsent("New York", "Albany");
+
+在putIfAbsent方法增加之前，java方面的替代解决方案在StackOverflow上的java map.get(key)–automatically do put(key) and return if key doesn't exist?帖子讨论过。在JDK8之前这没有任何意义，ConcurrentMap接口（继承自Map)已经提供了一个putIfabsent(K,V)方法。
+
+Map.remove(Object.Object)
+if (map.containsKey(key) && Objects.equals(map.get(key), value)) {
+ map.remove(key);
+ return true;
+   } else
+ return false;
+
+ /*
+ * 示范Map.remove(Object,Object)方法并和JDK8之前的实现方法做对比。JDK8
+ * 中新增的Map.remove(Object,Object)方法相比于传统的实现方法，所用的代码行数更少
+ * 并且允许用一个final类型的变量来接收返回值。 
+ */
+
+// JDK8之前的实现方式
+boolean removed = false;
+if (   statesAndCapitals.containsKey("New Mexico")
+&& Objects.equals(statesAndCapitals.get("New Mexico"), "Sante Fe"))
+{
+   statesAndCapitals.remove("New Mexico", "Sante Fe");
+   removed = true;
+}
+
+// JDK8的实现方式
+final boolean removedJdk8 = statesAndCapitals.remove("California", "Sacramento");
+
+Map.replace(K,V)
+if (map.containsKey(key)) {
+ return map.put(key, value);
+ } else
+ return null;
+
+ /*
+ * 示范Map.replace(K, V)方法并和JDK8之前的实现方法做对比。JDK8
+ * 中新增的Map.replace(K, V)方法相比于传统的实现方法，所用的代码行数更少
+ * 并且允许用一个final类型的变量来接收返回值。 
+ */
+
+// JDK8之前的实现方式
+String replacedCapitalCity;
+if (statesAndCapitals.containsKey("Alaska"))
+{
+   replacedCapitalCity = statesAndCapitals.put("Alaska", "Juneau");
+}
+
+// JDK8的实现方式
+final String replacedJdk8City = statesAndCapitals.replace("Alaska", "Juneau");
+
+Map.replace(K,V,V)
+
+第二的新增的Map replace方法在替换现存值方面有更窄的释义范围。当那个方法（上一个replace方法）只是涵盖指定的键在映射中有任意一个有效的值的替换处理，而这个“replace”方法接受一个额外的（第三个）参数，只有在指定的键和值都匹配的情况下才会替换。 javadoc注释说明了该默认值方法的实现：
+
+The default implementation is equivalent to, for this map:
+
+ if (map.containsKey(key) && Objects.equals(map.get(key), value)) {
+ map.put(key, newValue);
+ return true;
+ } else
+ return false;
+
+ /*
+ * 示范Map.replace(K, V, V)方法并和JDK8之前的实现方法做对比。JDK8
+ * 中新增的Map.replace(K, V, V)方法相比于传统的实现方法，所用的代码行数更少
+ * 并且允许用一个final类型的变量来接收返回值。 
+ */
+
+// JDK8之前的实现方式
+boolean replaced = false;
+if (   statesAndCapitals.containsKey("Nevada")
+&& Objects.equals(statesAndCapitals.get("Nevada"), "Las Vegas"))
+{
+   statesAndCapitals.put("Nevada", "Carson City");
+   replaced = true;
+}
+
+// JDK8的实现方式
+final boolean replacedJdk8 = statesAndCapitals.replace("Nevada", "Las Vegas", "Carson City");
+
+观察与结论
+
+下面是一些根据本文得出的观察论点。
+
+对与这些JDK8中Map的新增方法，javadoc方法是很有用的，特别是在用JDK8之前的代码描述新方法的行为时。我是在JDK 8 javadoc-based API documentation的基础上更宽泛的讨论这些方法的javadoc文档。
+由这些方法的javadoc注释中指出的等价java代码可以得出，这些方法在访问map的键和值之前通常不会做非空检查。因此，在使用这些方法和javadoc注释中的等价java时会引发同样的空指针问题。实际上，javadoc注释通常会根据一些允许键和值为空或不为空的Map具体实现会引发空指针和其他问题的可能性而提出警告
+在本文中讨论的新增的Map方法都是“默认值方法”，意味着Map的具体实现会自动“继承”这些（默认值）实现
+在本文中讨论的新增的Map方法把代码的干净简明考虑在内。在我大多数的例子中，他们允许客户端代码从多行状态相连的语句转换成单行语句并一劳永逸的（把返回值）赋值给一个本地变量。
+在本文涵盖的新增的Map方法都没有多少创造性或者重大特性更新，但是他们更便利，许多java开发者之前实现这些功能需要很多冗长的代码，为此而写他们自己的相似的方法，或者为此而使用一个第三方类库。JDK8把这些标准化的方法带给广大的java用户而不需要自定义实现或者第三方框架。因为是基于默认值方法的机制实现的，甚至那些已经存在一段时间的Map实现突然自动的就可以访问这些新增的方法而不需要做任何代码变更。

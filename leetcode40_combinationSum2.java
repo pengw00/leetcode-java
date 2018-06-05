@@ -13,6 +13,25 @@ public class ArrayListDemo {
         return res;
     }
     
+    public static List<List<Integer>> combinationSum3(int k, int n){
+        List<List<Integer>> ans = new ArrayList<>();
+        combination(ans, new ArrayList<Integer>(), k, 1, n);
+        return ans;
+    }
+    
+    public static void combination(List<List<Integer>> ans, List<Integer> comb, int k, int start, int n){
+        if(comb.size() == k && n ==0){
+            List<Integer> li = new ArrayList<Integer>(comb);
+            ans.add(li);
+            return;
+        }
+        for(int i = start; i<= 9; i++){
+            comb.add(i);
+            combination(ans, comb, k, i+1, n-i);
+            comb.remove(comb.size()- 1);
+        }
+    }
+    
     public static void dfs_com(int[] cand, int cur, int target, List<Integer> path, List<List<Integer>> res) {
     if (target == 0) {
         res.add(new ArrayList(path));
@@ -22,7 +41,7 @@ public class ArrayListDemo {
     for (int i = cur; i < cand.length; i++){
         if (i > cur && cand[i] == cand[i-1]) continue;
         path.add(path.size(), cand[i]);
-        System.out.println(target - cand[i]);
+        //System.out.println(target);
         dfs_com(cand, i+1, target - cand[i], path, res);
         path.remove(path.size()-1);
         //System.out.println(cand[i]);
@@ -48,9 +67,12 @@ public class ArrayListDemo {
       for (Integer number : arrlist) {
          System.out.println("Number = " + number);
       }  
+      List<List<Integer>> res1= new ArrayList<List<Integer>>();
       List<List<Integer>> res = new ArrayList<List<Integer>>();
+      res1 = combinationSum3(3,7);
       res = combinationSum2(candidates, target);
       System.out.println(res);
+      System.out.println(res1);
    }
    
 }

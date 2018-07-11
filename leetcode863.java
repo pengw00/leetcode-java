@@ -3,6 +3,8 @@
 //solution:anotation parent, using bfs to mark all the node's parent using HashMap, then using breadth first
 //search to find the neighbour level by level, a node with it's left, right and parent is one level, 
 //with a null node to separate the level when the level distance == 2, put the queue into the list. And done. 
+// directly point to the target node and traversal to level k, using HashSet to judge whether the node's 
+//left, right and parent has been addedinto the queue
 class solution{
   Map<TreeNode,TreeNode> parent;
   public List<Integer> distanceK(TreeNode root, TreeNode target, int k){
@@ -28,7 +30,7 @@ class solution{
           return ans;
         }
         queue.offer(null);
-        dist++;
+        dist++;//after every level(meet null), increase the cur level by dist++
       else{
       //breath first search the node all neighbor, left right parent(which contained in hashmap
           if(!seen.contains(node.left){ // avoid add duplicate parent node or child node;

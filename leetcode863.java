@@ -58,6 +58,54 @@ class solution{
 }
             
           
-      
-      
+/*solution two depth first search, if the target on the right of the node with dist of 2, we will recursively search it 
+on the left by using a subtree_add() function with parameter of k-2, and similarly as target at the left
+*/
+class solution2{
+  List<Integer> ans;
+  TreeNode target;
+  int K;
+  public List<Integer> distanceK(TreeNode root, TreeNode target, int K){
+    ans = new LinkedList<>();//define subclass but recursively make it List() = LinkedList() right!!
+    this.K = K;
+    dfs(root);
+    return ans;
+  }
+  //return the distance from the node to the target(which is in the node's branch
+  public int dfs(TreeNode node){
+    if(node == null) return -1;
+    else if(node == target){
+      subtree_add(node,0);//add the node == target into the ans list
+      return 1;//is the node is the target the distance will be 1, since the 
+               //since the distance between node's left and right is 2
+    }else{
+      int L = dfs(node.left), R = dfs(node.right);
+      if(L != -1){
+        if(L==K) ans.add(node.val);
+        subtree_add(node.right,L+1);
+        return L+1;
+      }else if(R != -1){
+        if(R==K) ans.add(node.val);
+        //with every node  in the opposite side we will search the other side
+        subtree_add(node.left,R+1);//the distance between node's left and right is 2
+        return R+1;
+      }else{
+        return -1; // if there is no target in the node's children, ignore it,the distance will be -1
+      }
+    }
+  }
+  // search subtree function depth first search
+  public void subtree_add(TreeNode node, int dist){
+    if(node == null) return; // if 
+    if(dist == K) 
+      ans.add(node.val);
+    else{
+      subtree_add(node.left, dist+1);
+      subtree_add(node.right, dist+1);
+    }
+  }
+}
+             
+        
+    
     

@@ -13,6 +13,7 @@ and the relative position of R is always <= at end, the similar as L,
 so only one pass from left to right, check the condition
 Notes2: solution2 is count, in start: if R, r++, then in end, if R, r--, 
 then at every position if r==0, the same as L.
+Dog followup: 如果LR只能轮流走，r先走，直到有一方不能走
 */
 public class lc777{
 	public static boolean canTransform(String start, String end){

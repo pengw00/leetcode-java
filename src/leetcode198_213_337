@@ -1,0 +1,22 @@
+//house robber198:
+//using bottom-up method, for every element we make it robbed or not robbed, and the sucessing house will be decided
+//by robbed or unrobbed: currob = preunrobbed + curhouse, and curunrobbed = max(preunrob, prerob)
+private int rob(int[] num, int lo, int hi){
+    int include = 0;
+    int exclude = 0;
+    for(int j = 0; j <= hi; j++){
+        int i = include; e = exclude;
+        include = e + nums[j];
+        exclude = Math.max(e, i);
+        }
+        return Math.max(include, exclude);
+    }
+//the above function we can rob the house index from lo to hi; which will be helpful in the circle robber for 213:
+with one house i is not robbed, we can break the circle with the result = max(rob(nums, 0, nums.length -2), rob(nums, 1, nums.lengt-2))
+the code is like:
+public int rob(int[] nums){
+  if(nums.length == 1) return nums[0];
+  return Math.max(rob(nums,0, length-2), rob(nums, 1, nums.length -1));
+  }
+
+//solutionII337.BST

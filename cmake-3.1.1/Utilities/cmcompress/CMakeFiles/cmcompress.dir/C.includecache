@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pengwu550/leetcode-java/cmake-3.1.1/Utilities/cmcompress/cmcompress.c
+cmcompress.h
+/home/pengwu550/leetcode-java/cmake-3.1.1/Utilities/cmcompress/cmcompress.h
+errno.h
+-
+string.h
+-
+
+/home/pengwu550/leetcode-java/cmake-3.1.1/Utilities/cmcompress/cmcompress.h
+stdio.h
+-
+

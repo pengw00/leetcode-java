@@ -25,16 +25,17 @@ class solution {
 				for(char c: ss.toCharArray()){
 					f |= 1<<c; // every char will be in his own position
 				}
-			}
-			if(Integer.bitCount(f) <= maxLetters){
-				if(!map.containsKey(subs)){
-					map.put(subs, 1);
+				if(Integer.bitCount(f) <= maxLetters){
+					if(!map.containsKey(subs)){
+						map.put(subs, 1);
+					}else{
+						map.put(subs, map.get(ss)+1);
+					}
 				}else{
-					map.put(subs, map.get(ss)+1);
+					break; // break the second level
 				}
-			}else{
-				break; // break the second level
 			}
+			
 		}
 		int ret = 0;
 		for(int c: map.values()){

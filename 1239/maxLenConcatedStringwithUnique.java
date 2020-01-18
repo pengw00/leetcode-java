@@ -10,6 +10,7 @@ class solution{
 		String[] demo1 = new String[]{"abs", "dfg", "bgf", "rty", "oiu"};
 		System.out.println(maxLength(demo1));
 	}
+	//bit set, similar to subset level by level
 	public static int maxLength(String[] A){
 		List<Integer> map = new ArrayList<>();
 		dp.add(0);
@@ -30,5 +31,37 @@ class solution{
 			}
 		}
 		return res;
+	}
+	//backtrack
+	int max = 0;
+	public static int MaxLenBacktrack(String[] input){
+		int[] count = new int[256];
+		backtrack(input, count, 0, "");
+		return max;
+	}
+	private static void backtrack(String[] input, int count, int index, String str){
+		if(index==input.length) return;
+		for(int i = index; i < arr.size(); i++){
+			char[] array = arr.get(i).toCharArray();
+			boolean dup = false;
+			for(int k = 0; k < array.length; k++){
+				char c = array[k];
+				if(count[(int)c] == 1){
+					for(int j = 0; j < k; j++){
+						count[(int)(array[j])]--;
+					}
+					dup = true;
+					break;
+				}
+				count[(int)c]++;
+			}
+			if(!dup){
+				max = Math.max(max, str.length() + array.length);
+				backtrack(input, count, i+1, str+input.get(i));
+				for(char c: array){
+					count[(int)c]--;
+				}
+			}
+		}
 	}
 }
